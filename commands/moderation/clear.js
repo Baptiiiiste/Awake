@@ -1,51 +1,93 @@
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
+
+
 
 module.exports = {
     name: 'clear',
     category: 'moderation',
     permissions: ['MANAGE_MESSAGES'],
     ownerOnly: false,
-    usage: 'clear [nombre] <@user>',
-    examples: ['clear 50', 'clear 15 @user'],
-    description: 'Supprimer un nombre de message sur un salon ou un utilisateur.',
+    usage: 'clear [amount] <@user>',
+    examples: ['clear 50', 'clear 15 @awake'],
+    description: 'Clear a defined amount of messages or delete a defined amount of messages to a specific user.',
     options: [
         {
-            name: 'message', 
-            description: 'Nombre de message à supprimer',
+            name: 'amount',
+            description: 'Amount of messages',
             type: ApplicationCommandOptionType.Number,
             required: true,
         },
         {
-            name: 'user', 
-            description: 'Utilisateur à supprimer',
+            name: 'member',
+            description: 'Author of messages',
             type: ApplicationCommandOptionType.User,
             required: false,
         }
     ],
-    async runInteraction(client, interaction) {
-        const amountToDelete = interaction.options.getNumber('message');
-        if( amountToDelete > 100 || amountToDelete < 0 ) return interaction.reply("`ERREUR | Nombre de message invalide ( 0> & <100 )`");
-        const target =  interaction.options.getMember('user');
-        
-        const messagesToDelete = await interaction.channel.messages.fetch();
-        if(target){
+    async runInteraction(client, interaction, guildSettings) {
+        const member = interaction.options.getMember("member");
+        const amount = interaction.options.getNumber("amount");
+
+
+        if (amount > 100 || amount < 2) return interaction.reply({ content: '❌ Invalid amount.', ephemeral: true });
+
+        if (member) {
+            const msgToDelete = await interaction.channel.messages.fetch();
             let i = 0;
             const filteredTargetMessages = [];
-            
-            (await messagesToDelete).filter(msg => {
-                if(msg.author.id == target.id && amountToDelete > i){
+            (await msgToDelete).filter(msg => {
+                if (msg.author.id == member.id && amount > i) {
                     filteredTargetMessages.push(msg);
                     i++;
-                }    
+                }
             });
 
-            await interaction.channel.bulkDelete(filteredTargetMessages, true).then(messages =>{
-                interaction.reply(`${messages.size} messages de ${target} supprimés`);
-            })
+            await interaction.channel.bulkDelete(filteredTargetMessages, true).then(async msg => {
+
+                const embed = new EmbedBuilder()
+                    .setTitle(`✏️ Channel cleared`)
+                    .setThumbnail(member.displayAvatarURL())
+                    .setColor("#F3AE0E")
+                    .setDescription(`
+    **User:** ${member}
+    **ID:** ${member.id}
+    **Channel:** ${interaction.channel}
+    **Moderator:** ${interaction.user.tag}
+    **Amount:** ${msg.size}`)
+                    .setTimestamp();
+
+                const logChannel = client.channels.cache.get(guildSettings.logChannel);
+                if(logChannel) logChannel.send({ embeds: [embed] });
+
+
+                const response = new EmbedBuilder()
+                    .setColor("#5DBC4C")
+                    .setDescription(`✅ Channel cleared\n👮‍♂️ User: ${member}\n✏️ Amount: ${msg.size}`);
+                await interaction.reply({ embeds: [response], ephemeral: true });
+
+            });
 
         } else {
-            interaction.channel.bulkDelete(amountToDelete, true).then(messages =>{
-                interaction.reply(`${messages.size} messages supprimés`);
+            await interaction.channel.bulkDelete(amount, true).then(async msg => {
+
+                const embed = new EmbedBuilder()
+                    .setTitle(`✏️ Channel cleared`)
+                    .setColor("#F3AE0E")
+                    .setDescription(`
+    **Channel:** ${interaction.channel}
+    **Moderator:** ${interaction.user.tag}
+    **Amount:** ${msg.size}`)
+                    .setTimestamp();
+
+                const logChannel = client.channels.cache.get(guildSettings.logChannel);
+                if(logChannel) logChannel.send({ embeds: [embed] });
+
+
+                const response = new EmbedBuilder()
+                    .setColor("#5DBC4C")
+                    .setDescription(`✅ Channel cleared\n✏️ Amount: ${msg.size}`);
+                await interaction.reply({ embeds: [response], ephemeral: true });
+
             })
         }
     }

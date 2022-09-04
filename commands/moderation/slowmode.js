@@ -1,28 +1,35 @@
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
+
 module.exports = {
     name: 'slowmode',
     category: 'moderation',
-    permissions: ['MANAGE_MESSAGES'],
+    permissions: ['MANAGE_CHANNELS'],
     ownerOnly: false,
-    usage: 'clear [nombre] <@user>',
-    examples: ['clear 50', 'clear 15 @user'],
-    description: 'Supprimer un nombre de message sur un salon ou un utilisateur.',
+    usage: 'slowmode [amount]',
+    examples: ['slowmode 10', 'slowmode 0'],
+    description: 'Enable or disable the slowmode in a channel',
     options: [
         {
-            name: 'value', 
-            description: 'Temps du slowmode',
+            name: 'value',
+            description: 'Ratelimit',
             type: ApplicationCommandOptionType.Number,
             required: true,
         }
     ],
-    async runInteraction(client, interaction) {
+    async runInteraction(client, interaction, guildSettings) {
         const value = interaction.options.getNumber("value");
         await interaction.channel.setRateLimitPerUser(value);
 
-        if(value == 0){
-            return interaction.reply({content : "🐇 Slowmode désactivé"});
-        }else{
-            return interaction.reply({content : `🐌 Slowmode activé - ${value} seconde${value > 1 ? "s" : ""}`});
+        if (value == 0) {
+            const response = new EmbedBuilder()
+                .setColor("#952CB7")
+                .setDescription("🐇 Slowmode disabled");
+            return interaction.reply({ embeds:[response], ephemeral: true });
+        } else {
+            const response = new EmbedBuilder()
+                .setColor("#952CB7")
+                .setDescription(`🐌 Slowmode enabled - ${value} second${value > 1 ? "s" : ""}`);
+            return interaction.reply({ embeds:[response], ephemeral: true });
         }
     }
 };

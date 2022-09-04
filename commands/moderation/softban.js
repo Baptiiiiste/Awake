@@ -1,40 +1,39 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 
 module.exports = {
-    name: 'kick',
+    name: 'softban',
     category: 'moderation',
-    permissions: ['KICK_MEMBERS'],
+    permissions: ['BAN_MEMBERS'],
     ownerOnly: false,
-    usage: 'kick [@user] [reason]',
-    examples: ['kick @awake Get out of here !'],
-    description: 'Kick someone from the server',
+    usage: 'softban [@user]',
+    examples: ['softban @awake'],
+    description: 'Kick someone from the server and delete his messages',
     options: [
         {
-            name: 'member',
-            description: 'User to kick',
+            name: "member",
             type: ApplicationCommandOptionType.User,
-            required: true,
+            description: "User to softban",
+            required: true
         },
         {
-            name: 'reason', 
-            description: 'Reason',
+            name: "reason",
             type: ApplicationCommandOptionType.String,
-            required: true,
+            description: "Reason",
+            required: false
         }
     ],
     async runInteraction(client, interaction, guildSettings) {
-
         const member = interaction.options.getMember("member", true);
         const reason = interaction.options.getString("reason") || "No reason given";
 
         if(!member) return interaction.reply({content: `❌ Member not found.`, ephemeral: true});
+        if(!member.bannable) return interaction.reply({ content: `❌ Cannot softban this member.`, ephemeral: true });
 
-        if(!member.kickable) return interaction.reply({ content: `❌ Cannot kick this member.`, ephemeral: true });
 
         const embed = new EmbedBuilder()
-            .setTitle(`⚒️ User kicked from the server`)
+            .setTitle(`⚒️ User softbanned from the server`)
             .setThumbnail(member.displayAvatarURL())
-            .setColor("#FB3C3C")
+            .setColor("#ffb969")
             .setDescription(`
 		**Member:** ${member.user.tag}
 		**ID:** ${member.id}
@@ -43,18 +42,20 @@ module.exports = {
             .setTimestamp();
 
 
-
         const response = new EmbedBuilder()
             .setColor("#5DBC4C")
-            .setDescription(`✅ User ${member} was kicked from the server. \n➡️ Reason: ${reason}`);
+            .setDescription(`✅ User ${member} was softbanned from the server. \n➡️ Reason: ${reason}`);
 
-        await member.kick(reason);
+
+        await member.ban({days: 7, reason: `${reason}`});
+        await interaction.guild.members.unban(member.id)
         const logChannel = client.channels.cache.get(guildSettings.logChannel);
         if(logChannel) logChannel.send({ embeds: [embed] });
 
-        await interaction.reply({embeds: [response], ephemeral: true});
+        await interaction.reply({ embeds:[response], ephemeral: true });
 
-        await interaction.reply({content: `❌ I couldn't kick this member`, ephemeral: true});
+
+        await interaction.reply({content: `❌ I couldn't softban this member`, ephemeral: true});
     }
 };
 

@@ -8,9 +8,9 @@ module.exports = {
     ownerOnly: true,
     usage: 'reload',
     examples: [],
-    description: 'reload le bot',
+    description: 'restart the bot',
     async run(client, message, args) {
-        await message.reply("Bot relancé !");
+        await message.reply("Bot restarted !");
         return process.exit();
     }
 };

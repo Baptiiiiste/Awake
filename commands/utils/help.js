@@ -1,11 +1,11 @@
-const { EmbedBuilder } = require('discord.js');
 const { readdirSync } = require('fs');
 const commandFolder = readdirSync('./commands');
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
+
 
 
 const contextDescription = {
-    userinfo: 'Renvoie des informations sur l\'utilisateur'
+    userinfo: 'Send user\'s informations'
 }
 
 module.exports = {
@@ -15,48 +15,47 @@ module.exports = {
     ownerOnly: false,
     usage: 'help <command>',
     examples: ['help ping'],
-    description: 'Affiche la page d\'aide',
+    description: 'Here to help ya',
     options: [
         {
             name: 'command', 
-            description: 'Commande',
+            description: 'Command',
             type: ApplicationCommandOptionType.String,
             required: false
         }
     ],
     async runInteraction(client, interaction, guildSettings)  {
-        const prefix = guildSettings.prefix;
         const cmdName = interaction.options.getString('command');
 
         if(!cmdName){
             const noArgsEmbed = new EmbedBuilder()
                 .setColor("#FD3333")
-                .addFields([{name: '❓ |  HELP ', value: `Liste des commandes par catégorie. \`${prefix}help <command>\` pour plus d'informations `, inline: true}])
+                .addFields([{name: '❓ |  HELP ', value: `List of commands. \`/help <command>\` for more informations `, inline: true}])
                 
 
             for (const category of commandFolder){
-                noArgsEmbed.addFields([{name: `${category.replace(/(^\w|\s\w)/g, firstLetter => firstLetter.toUpperCase())}`, value: `${prefix}${client.commands.filter(cmd => cmd.category == category.toLowerCase()).map(cmd => cmd.name).join(`, ${prefix}`)}`}])
+                noArgsEmbed.addFields([{name: `${category.replace(/(^\w|\s\w)/g, firstLetter => firstLetter.toUpperCase())}`, value: `/${client.commands.filter(cmd => cmd.category == category.toLowerCase()).map(cmd => cmd.name).join(`, /`)}`}])
             }
             return interaction.reply({embeds: [noArgsEmbed]});
         }
 
         const cmd = client.commands.get(cmdName);
-        if(!cmd) return message.reply({content: "ERREUR | Commande inexistante"});
+        if(!cmd) return message.reply({content: "ERROR | Invalid command"});
         
         return interaction.reply({ content: `
 \`\`\`makefile
-❓ | ${cmd.name.toUpperCase()} ${cmd.ownerOly ? '/!\\ Administrateur only' : ''}
+❓ | ${cmd.name.toUpperCase()} ${cmd.ownerOnly ? '/!\\ Administrator only' : ''}
 ${cmd.description ? cmd.description : contextDescription[`${cmd.name}`]}  
 
-Utilisation: ${prefix}${cmd.usage}
-Exemples: ${prefix}${cmd.examples.join(` | ${prefix}`)}
+Usage: /${cmd.usage}
+Examples: /${cmd.examples.join(` | /`)}
 
 Permissions: ${cmd.permissions.join(', ')}
 
-Prefix: ${prefix} ou /
-{} = sous-commande(s) disponible(s)
-[] = option(s) obligatoire(s)
-<> = option(s) optionnel(s)
+Prefix: /
+{} = subcommand(s) available(s)
+[] = option(s) available(s)
+<> = option(s) optional(s)
 \`\`\`
                 `, ephemeral: true})
 

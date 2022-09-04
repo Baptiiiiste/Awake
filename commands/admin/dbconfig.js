@@ -4,34 +4,26 @@ module.exports = {
     name: 'dbconfig',
     category: 'admin',
     permissions: ['ADMINISTRATOR'],
-    ownerOnly: true,
+    ownerOnly: false,
     usage: 'dbconfig [key] <value>',
-    examples: ['dbconfig prefix ?', 'dbconfig prefix'],
-    description: 'Configurer les données de la base de données.',
+    examples: ['dbconfig logChannel 2165746146461', 'dbconfig logChannel'],
+    description: 'Configure data in the database',
     options: [
         {
             name: 'key', 
-            description: 'Choisir une clé à modifier/afficher',
+            description: 'Key to edit',
             type: ApplicationCommandOptionType.String,
             required: true,
             choices: [
                 {
-                    name: "prefix",
-                    value: "prefix"
-                },
-                {
                     name: "logChannel",
                     value: "logChannel"
-                },
-                {
-                    name: "testChannel",
-                    value: "testChannel"
                 },
             ]
         },
         {
             name: 'value', 
-            description: 'Choisir la nouvelle valeur.',
+            description: 'Choose the new key',
             type: ApplicationCommandOptionType.String,
         }
     ],
@@ -39,31 +31,14 @@ module.exports = {
         const key = interaction.options.getString('key');
         const value = interaction.options.getString('value');
         
-        if (key == 'prefix'){
-
-            if(value){
-                await client.updateGuild(interaction.guild, {prefix: value});
-                return interaction.reply({content: `Nouveau préfix: ${value}`});
-            }
-
-            interaction.reply({content: `Préfix: ${guildSettings.prefix}`});
-
-        }else if (key == 'logChannel'){
+       if (key == 'logChannel'){
 
             if(value){
                 await client.updateGuild(interaction.guild, {logChannel: value});
-                return interaction.reply({content: `Nouveau salon de log: <#${value}>`});
+                return interaction.reply({content: `New logs channel: <#${value}>`});
             }
             
-            interaction.reply({content: `Salon de log: <#${guildSettings.logChannel}>`});
-        }else if (key == 'testChannel'){
-
-            if(value){
-                await client.updateGuild(interaction.guild, {testChannel: value});
-                return interaction.reply({content: `Nouveau salon de test: <#${value}>`});
-            }
-            
-            interaction.reply({content: `Salon de test: <#${guildSettings.testChannel}>`});
+            interaction.reply({content: `Logs channel: <#${guildSettings.logChannel}>`});
         }
     }
 };

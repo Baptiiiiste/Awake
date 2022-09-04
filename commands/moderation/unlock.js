@@ -1,3 +1,4 @@
+const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 module.exports = {
     name: 'unlock',
     category: 'moderation',
@@ -5,13 +6,14 @@ module.exports = {
     ownerOnly: false,
     usage: 'unlock',
     examples: [''],
-    description: 'unLock un salon',
-    async runInteraction(client, interaction) {
-        await interaction.channel.permissionOverwrites.edit(interaction.guild.id, {
-            SEND_MESSAGES: true
-        });
-        
-        await interaction.reply("Unlocked ! 🔓");
+    description: 'UnLock a channel',
+    async runInteraction(client, interaction, guildSettings) {
+        await interaction.channel.permissionOverwrites.edit(interaction.guild.id, { SendMessages: true })
+        const response = new EmbedBuilder()
+            .setColor("#E4BD0C")
+            .setDescription(`🔓 Channel unlocked`);
+
+        await interaction.reply({embeds: [response], ephemeral: true});
     }
 };
 

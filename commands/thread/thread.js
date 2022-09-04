@@ -1,4 +1,5 @@
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
+
 module.exports = {
     name: 'thread',
     category: 'thread',
@@ -6,33 +7,33 @@ module.exports = {
     ownerOnly: false,
     usage: 'thread [join|leave|archive|unarchive|delete]',
     examples: ['thread join', 'thread delete'],
-    description: 'Modifier les threads',
+    description: 'Edit threads',
     options: [
         {
             name: 'join', 
-            description: 'Joindre un thread',
+            description: 'Join a thread',
             type: ApplicationCommandOptionType.Subcommand
         },
         {
             name: 'leave', 
-            description: 'Quitter un thread',
+            description: 'Leave a thread',
             type: ApplicationCommandOptionType.Subcommand
         },
         {
             name: 'archive', 
-            description: 'Archiver un thread',
+            description: 'Archive a thread',
             type: ApplicationCommandOptionType.Subcommand
         },
         {
             name: 'unarchive', 
-            description: 'Désarchiver un thread',
+            description: 'Unarchive a thread',
             type: ApplicationCommandOptionType.Subcommand
         },
         {
             name: 'delete', 
-            description: 'Supprimer un thread',
+            description: 'Delete a thread',
             type: ApplicationCommandOptionType.Subcommand,
-            options: [ { name: 'channel', type: ApplicationCommandOptionType.String, description: 'Id du channel', required: true } ]
+            options: [ { name: 'channel', type: ApplicationCommandOptionType.String, description: 'Channel\'s id', required: true } ]
         }
     ],
     async runInteraction(client, interaction) {

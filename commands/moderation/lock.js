@@ -1,3 +1,4 @@
+const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 module.exports = {
     name: 'lock',
     category: 'moderation',
@@ -5,13 +6,15 @@ module.exports = {
     ownerOnly: false,
     usage: 'lock',
     examples: [''],
-    description: 'Lock un salon',
-    async runInteraction(client, interaction) {
-        await interaction.channel.permissionOverwrites.edit(interaction.guild.id, {
-            SEND_MESSAGES: false
-        });
-        
-        await interaction.reply("Locked ! 🔐");
+    description: 'Lock a channel',
+    async runInteraction(client, interaction, guildSettings) {
+        await interaction.channel.permissionOverwrites.edit(interaction.guild.id, { SendMessages: false })
+
+        const response = new EmbedBuilder()
+            .setColor("#E4BD0C")
+            .setDescription(`🔐 Channel locked`);
+
+        await interaction.reply({embeds: [response], ephemeral: true});
     }
 };
 

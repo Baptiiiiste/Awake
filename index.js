@@ -11,11 +11,11 @@ const Logger = require("./utils/Logger");
 require('./utils/Functions')(client);
 
 
-process.on('exit', code => { Logger.client(`Processus arreté: ${code}`); });
+process.on('exit', code => { Logger.client(`Process stopped: ${code}`); });
 
 process.on('uncaughtException', (err, origin) => { 
     Logger.error(`uncaughtException: ${err}`); 
-    console.error(`Origine: ${origin}`);
+    console.error(`Origin: ${origin}`);
 });
 
 process.on('unhandledRejection', (reason, promise) => { 
@@ -32,7 +32,7 @@ mongoose.connect(process.env.DATABASE_URI, {
     serverSelectionTimeoutMS: 5000,
     socketTimeoutMS: 45000,
     family: 4
-}).then(() => { Logger.client('Base de données connectée') })
+}).then(() => { Logger.client('Database connected') })
 .catch(err => { Logger.error(err)});
 
 client.login(process.env.DISCORD_TOKEN);

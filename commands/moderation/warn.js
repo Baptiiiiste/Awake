@@ -1,26 +1,25 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-
-
+const dayjs = require("dayjs");
 module.exports = {
-    name: 'ban',
+    name: 'warn',
     category: 'moderation',
-    permissions: ['BAN_MEMBERS'],
+    permissions: ['MODERATE_MEMBERS'],
     ownerOnly: false,
-    usage: 'ban [@user] [reason]',
-    examples: ['ban @awake Swearing'],
-    description: 'Ban someone from the server.',
+    usage: 'warn [@user] [reason]',
+    examples: ['warn @awake bad words'],
+    description: 'UnMute someone',
     options: [
         {
-            name: 'member',
-            description: 'Member to ban',
+            name: "member",
             type: ApplicationCommandOptionType.User,
-            required: true,
+            description: "User to unmute",
+            required: true
         },
         {
-            name: 'reason', 
-            description: 'Reason',
+            name: "reason",
             type: ApplicationCommandOptionType.String,
-            required: true
+            description: "Reason for mute",
+            required: false
         }
     ],
     async runInteraction(client, interaction, guildSettings) {
@@ -28,13 +27,13 @@ module.exports = {
         const reason = interaction.options.getString("reason") || "No reason given";
 
         if (!member) return interaction.reply({ content: `❌ Member not found.`, ephemeral: true });
+        if(!member.moderatable) return interaction.reply({ content: `❌ Cannot warn this member.`, ephemeral: true });
 
-        if(!member.bannable) return interaction.reply({ content: `❌ Cannot ban this member.`, ephemeral: true });
 
         const embed = new EmbedBuilder()
-            .setTitle(`⚒️ User banned from the server`)
+            .setTitle(`⚒️ User warned from the server`)
             .setThumbnail(member.displayAvatarURL())
-            .setColor("#FB3C3C")
+            .setColor("#F7E405")
             .setDescription(`
 		**Member:** ${member.user.tag}
 		**ID:** ${member.id}
@@ -44,21 +43,20 @@ module.exports = {
 
         const response = new EmbedBuilder()
             .setColor("#5DBC4C")
-            .setDescription(`✅ User ${member} was banned from the server. \n➡️ Reason: ${reason}`);
+            .setDescription(`✅ User ${member} was warned from the server. \n➡️ Reason: ${reason}`);
 
-
-        await member.ban({ reason });
         const logChannel = client.channels.cache.get(guildSettings.logChannel);
         if(logChannel) logChannel.send({ embeds: [embed] });
 
         await interaction.reply({ embeds:[response], ephemeral: true });
+
 
         const userArray = guildSettings.users;
         const cases = guildSettings.users.map(u => u.case);
         const highestCase = Math.max(...cases);
         const user = {
             case: (cases.length === 0 ? 0 : highestCase + 1),
-            type: "Ban",
+            type: "Warn",
             name: member.user.tag,
             id: member.id,
             moderator: interaction.user.tag,
@@ -68,6 +66,7 @@ module.exports = {
 
         userArray.push(user);
         await client.updateGuild(interaction.guild, {users: userArray});
+
     }
 };
 
