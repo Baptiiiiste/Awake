@@ -1,4 +1,4 @@
-# Awake - Under development
+# Awake - in development
 Discord bot made using Discord.js v14
 Create a .env file with 
 ```
