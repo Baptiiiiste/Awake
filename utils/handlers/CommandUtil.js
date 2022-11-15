@@ -9,26 +9,26 @@ module.exports = async client => {
         const cmd = require(cmdFile);
 
         if(!cmd.name) {
-            return Logger.warn(`Commande non-chargée (Nom manquant): ${cmdFile}`);
+            return Logger.warn(`Command not loaded (Missing name): ${cmdFile}`);
         }
 
         if(!cmd.description && cmd.type != ApplicationCommandType.User){
-            return Logger.warn(`Commande non-chargée (Description manquante): ${cmdFile}`);
+            return Logger.warn(`Command not loaded (Missing description): ${cmdFile}`);
         }
 
-        if (!cmd.permissions)  return Logger.warn(`Commande non-chargée (Permission manquante): ${cmdFile}`);
+        if (!cmd.permissions)  return Logger.warn(`Command not loaded (Missing permission): ${cmdFile}`);
         
-        if (cmd.ownerOnly == undefined)  return Logger.warn(`Commande non-chargée (OwnerOnly pas défini): ${cmdFile}`);
+        if (cmd.ownerOnly == undefined)  return Logger.warn(`Command not loaded (OwnerOnly undefined): ${cmdFile}`);
        
-        if (!cmd.usage)  return Logger.warn(`Commande non-chargée (Utilisation manquante): ${cmdFile}`);
+        if (!cmd.usage)  return Logger.warn(`Command not loaded (Missing usage): ${cmdFile}`);
        
-        if (!cmd.examples)  return Logger.warn(`Commande non-chargée (Exemple(s) manquant(s)): ${cmdFile}`);
+        if (!cmd.examples)  return Logger.warn(`Command not loaded (Missing example(s)): ${cmdFile}`);
 
-        if (!cmd.category)  return Logger.warn(`Commande non-chargée (Catégorie manquante): ${cmdFile}`);
+        if (!cmd.category)  return Logger.warn(`Command not loaded (Missing category): ${cmdFile}`);
 
         cmd.permissions.forEach(permission => {
             if(!permissionList.includes(permission)) {
-                return Logger.typo(`Commande non-chargée (Permission(s): ${permission}): ${cmdFile}`);
+                return Logger.typo(`Command not loaded (Permission(s): ${permission}): ${cmdFile}`);
             }
         });
 

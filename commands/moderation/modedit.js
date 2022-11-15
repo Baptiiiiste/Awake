@@ -1,4 +1,5 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
+const { Guild } = require('../../models/index')
 
 
 module.exports = {
@@ -13,7 +14,7 @@ module.exports = {
         {
             name: "case",
             type: ApplicationCommandOptionType.Number,
-            description: "Case to delete",
+            description: "Case to edit",
             required: true
         },
         {
@@ -25,7 +26,7 @@ module.exports = {
         {
             name: "reason",
             type: ApplicationCommandOptionType.String,
-            description: "New reason of the case (Only if action is 'delete')",
+            description: "New reason of the case (Only if action is 'reason')",
             required: false
         }
     ],
@@ -34,8 +35,7 @@ module.exports = {
         const action = interaction.options.getString("action", true);
         const newreason = interaction.options.getString("reason");
 
-
-        if(!caseNumber) return interaction.reply({ content: `❌ You must specify a case number.`, ephemeral: true });
+        if(!caseNumber && caseNumber !== 0) return interaction.reply({ content: `❌ You must specify a case number.`, ephemeral: true });
         if(!action) return interaction.reply({ content: `❌ You must specify an action (delete, reason).`, ephemeral: true });
 
 
@@ -54,28 +54,35 @@ module.exports = {
             await interaction.reply({ embeds:[response], ephemeral: true });
 
         }else if(action == "reason"){
-            console.log("1");
             if(!newreason) return interaction.reply({ content: `❌ You must specify a new reason.`, ephemeral: true });
-            console.log("2");
-            // LIGNE A MODIF POUR EDIT LA RAISON DU CASE--  find one & update
-            console.log("3");
-            await client.updateGuild(interaction.guild, {users: guildSettings.users});
-            console.log("4");
+            guildSettings.users[filteredCase].reason = newreason;
 
+            await client.updateGuild(interaction.guild, {users: guildSettings.users});
 
             const response = new EmbedBuilder()
                 .setColor("#5DBC4C")
                 .setDescription(`✅ Case ${caseNumber} was edited.\n➡️New reason: ${newreason}`);
 
-            console.log("5");
-
-
             await interaction.reply({ embeds:[response], ephemeral: true });
 
-            console.log("6");
-
-
+        }else{
+            await interaction.reply({ content: `❌ You must specify a valid action (delete, reason).`, ephemeral: true })
+            return
         }
+
+        const logResponse = new EmbedBuilder()
+        .setColor("#DF9400")
+        .setTitle(`⚒️ Case Edited`)
+        .setDescription(`
+**Case:** ${caseNumber}
+**Action:** ${action}
+**Moderator:** ${interaction.user.tag}
+${newreason ? `**New reason:** ${newreason}` : ""}
+        `)
+        .setTimestamp();
+        const logChannel = client.channels.cache.get(guildSettings.logChannel);
+        if(logChannel) logChannel.send({ embeds: [logResponse]});
+
     }
 };
 

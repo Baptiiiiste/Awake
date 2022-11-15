@@ -22,10 +22,10 @@ module.exports = {
             .setAuthor({name: `${member.user.tag
             } (${member.id})`, iconURL: member.user.displayAvatarURL()})
             .setColor('#FD3333')
-            .setDescription(`± Nom d'utilisateur: ${member}
-            ± Compte crée le: <t:${parseInt(member.user.createdTimestamp / 1000)}:f> (<t:${parseInt(member.user.createdTimestamp / 1000)}:R>)
-            ± Serveur quitté le: <t:${parseInt(Date.now() / 1000)}:f> (<t:${parseInt(Date.now() / 1000)}:R>)
-            ${isMemberKick ? `± A été exclu pour \`${reason}\`` : ''}
+            .setDescription(`± Username: ${member}
+            ± Created at: <t:${parseInt(member.user.createdTimestamp / 1000)}:f> (<t:${parseInt(member.user.createdTimestamp / 1000)}:R>)
+            ± Left at: <t:${parseInt(Date.now() / 1000)}:f> (<t:${parseInt(Date.now() / 1000)}:R>)
+            ${isMemberKick ? `± Kicked for \`${reason}\`` : ''}
             `)
             .setTimestamp();
             

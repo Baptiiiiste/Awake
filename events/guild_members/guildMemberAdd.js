@@ -13,9 +13,9 @@ module.exports = {
             .setAuthor({name: `${member.user.tag
             } (${member.id})`, iconURL: member.user.displayAvatarURL()})
             .setColor('#21ff81')
-            .setDescription(`± Nom d'utilisateur: ${member}
-            ± Compte crée le: <t:${parseInt(member.user.createdTimestamp / 1000)}:f> (<t:${parseInt(member.user.createdTimestamp / 1000)}:R>)
-            ± Serveur rejoint le: <t:${parseInt(member.joinedTimestamp / 1000)}:f> (<t:${parseInt(member.joinedTimestamp / 1000)}:R>)
+            .setDescription(`± Username: ${member}
+            ± Created at: <t:${parseInt(member.user.createdTimestamp / 1000)}:f> (<t:${parseInt(member.user.createdTimestamp / 1000)}:R>)
+            ± Joined at: <t:${parseInt(member.joinedTimestamp / 1000)}:f> (<t:${parseInt(member.joinedTimestamp / 1000)}:R>)
             `)
             .setTimestamp();
 

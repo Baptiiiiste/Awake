@@ -50,11 +50,10 @@ module.exports = {
 
         await member.kick(reason);
         const logChannel = client.channels.cache.get(guildSettings.logChannel);
-        if(logChannel) logChannel.send({ embeds: [embed] });
+        if(logChannel) await logChannel.send({ embeds: [embed] });
 
         await interaction.reply({embeds: [response], ephemeral: true});
 
-        await interaction.reply({content: `❌ I couldn't kick this member`, ephemeral: true});
     }
 };
 

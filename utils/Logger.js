@@ -16,7 +16,7 @@ function write(content, tagColor, tag, error = false){
 
 
 function error(content){
-    write(content, 'red', 'ERREUR', true);
+    write(content, 'red', 'ERROR', true);
 }
 
 function warn(content){

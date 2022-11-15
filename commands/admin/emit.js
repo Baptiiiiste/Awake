@@ -9,17 +9,17 @@ module.exports = {
     examples: ['emit guildCreate'],
     description: 'Emit a specified event',
     run(client, message, args) {
-        if (!args[0] || !args[0].match(/^(guildMemberAdd|guildMemberRemove)$/)) return message.reply("ERROR | Invalid event (`guildMemberAdd`,`guildMemberRemove`)")
+        if (!args[0] || !args[0].match(/^(guildMemberAdd|guildMemberRemove)$/)) return message.reply({content: "❌ | Invalid event (`guildMemberAdd`,`guildMemberRemove`)", ephemeral: true})
         
         if (args[0] == 'guildMemberAdd'){
             client.emit('guildMemberAdd', message.member);
-            message.reply('Event guildMemberAdd emitted !');
+            message.reply({content: 'Event guildMemberAdd emitted !', ephemeral: true});
         }else if (args[0] == 'guildCreate'){
             client.emit('guildCreate', message.guild);
-            message.reply('Event guildCreate emitted !');
+            message.reply({content: 'Event guildCreate emitted !', ephemeral: true});
         }else if (args[0] == 'guildMemberRemove'){
             client.emit('guildMemberRemove', message.member);
-            message.reply('Event guildMemberRemove emitted !');
+            message.reply({content: 'Event guildMemberRemove emitted !', ephemeral: true});
         }
     
     

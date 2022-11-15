@@ -1,17 +1,24 @@
-const { ApplicationCommandType, EmbedBuilder } = require('discord.js');
-
+const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: 'userinfo',
     category: 'users',
     permissions: ['SEND_MESSAGES'],
     ownerOnly: false,
-    usage: 'userinfo',
-    examples: ['userinfo'],
-    type: ApplicationCommandType.User,
-    async runInteraction(client, interaction) {
-
-        const member = await interaction.guild.members.fetch(interaction.targetId);
+    usage: 'userinfo [@user]',
+    examples: ['userinfo @Awake'],
+    description: 'Get the user informations',
+    options: [
+        {
+            name: 'member',
+            description: 'User to kick',
+            type: ApplicationCommandOptionType.User,
+            required: true,
+        },
+    ],
+    async runInteraction(client, interaction, guildSettings) {
+        // const member = await interaction.guild.members.fetch(interaction.targetId);
+        const member = interaction.options.getMember("member", true);
 
         const embed = new EmbedBuilder()
             .setAuthor({name: `${member.user.tag} (${member.id})`, iconURL: member.user.bot ? 'https://images.emojiterra.com/twitter/512px/1f916.png' : 'https://images.emojiterra.com/twitter/v13.1/512px/1f9d1.png'})
@@ -27,7 +34,7 @@ module.exports = {
             ])
 
 
-        interaction.reply({embeds: [embed], ephemeral: true})
+        await interaction.reply({embeds: [embed], ephemeral: true})
     }
 };
 

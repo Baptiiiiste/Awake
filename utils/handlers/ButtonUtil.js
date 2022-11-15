@@ -7,7 +7,7 @@ module.exports = async client => {
     (await pGlob(`${process.cwd()}/buttons/*/*.js`)).map(async btnFile =>{
         const btn = require(btnFile);
 
-        if(!btn.name) return Logger.warn(`Bouton non-chargé (Nom manquant): ${btnFile}`);
+        if(!btn.name) return Logger.warn(`Button not loaded (Missing name): ${btnFile}`);
 
         client.buttons.set(btn.name, btn);
     });

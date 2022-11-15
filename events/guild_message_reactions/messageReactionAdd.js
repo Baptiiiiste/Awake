@@ -1,3 +1,5 @@
+const Logger = require("../../utils/Logger")
+
 module.exports = {
     name: 'messageReactionAdd',
     once: false,
@@ -13,12 +15,12 @@ module.exports = {
             try {
                 await messageReaction.fetch();
             } catch (error) {
-                console.log("ERREUR | Impossible de récupérer les messages !");
+                Logger.error("Cannot get the messages")
                 return;
             }
         }
 
-        if(emojiName === '✅') member.send("coucou");
+        if(emojiName === '✅') member.send("Hi !");
         if(emojiName === '❌') message.delete();
         if(emojiName === '🟦') message.reactions.removeAll();
 

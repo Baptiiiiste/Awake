@@ -8,11 +8,11 @@ module.exports = async client => {
         const event = require(eventFile);
 
         if(!event.name) {
-            return Logger.warn(`Evènement non-déclenché (Nom manquant): ${eventFile}`);
+            return Logger.warn(`Untriggered event (Missing name): ${eventFile}`);
         }
 
         if(!eventList.includes(event.name)) {
-            return Logger.typo(`Evènement non-déclenché (Evènement: ${event.name}): ${eventFile}`);
+            return Logger.typo(`Untriggered event (Event: ${event.name}): ${eventFile}`);
         }
 
 

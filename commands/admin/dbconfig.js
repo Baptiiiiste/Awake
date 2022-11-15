@@ -35,10 +35,10 @@ module.exports = {
 
             if(value){
                 await client.updateGuild(interaction.guild, {logChannel: value});
-                return interaction.reply({content: `New logs channel: <#${value}>`});
+                return interaction.reply({content: `New logs channel: <#${value}>`, ephemeral: true});
             }
             
-            interaction.reply({content: `Logs channel: <#${guildSettings.logChannel}>`});
+            interaction.reply({content: `Logs channel: <#${guildSettings.logChannel}>`, ephemeral: true});
         }
     }
 };

@@ -1,6 +1,6 @@
 const ms = require("ms");
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-
+const dayjs = require('dayjs')
 
 module.exports = {
     name: 'mute',

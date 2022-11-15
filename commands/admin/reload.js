@@ -10,7 +10,7 @@ module.exports = {
     examples: [],
     description: 'restart the bot',
     async run(client, message, args) {
-        await message.reply("Bot restarted !");
+        await message.reply({content: "✅ Bot restarted !", ephemeral: true});
         return process.exit();
     }
 };

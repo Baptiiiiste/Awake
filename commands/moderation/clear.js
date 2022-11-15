@@ -1,7 +1,5 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 
-
-
 module.exports = {
     name: 'clear',
     category: 'moderation',

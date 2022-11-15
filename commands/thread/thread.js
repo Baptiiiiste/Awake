@@ -39,24 +39,24 @@ module.exports = {
     async runInteraction(client, interaction) {
 
         let thread = interaction.channel;
-        if (!thread.isThread()) return interaction.reply("`ERREUR | Ce channel n'est pas un thread`");
+        if (!thread.isThread()) return interaction.reply({content: `❌ This channel isn't a thread`, ephemeral: true});
 
         if(interaction.options.getSubcommand() === 'join'){
-            interaction.reply("`Le bot a rejoint le thread `");
+            interaction.reply({content: "✅ The bot joined the thread", ephemeral: true});
             if (thread.joinable) await thread.join();
         }else if(interaction.options.getSubcommand() === 'leave'){
-            interaction.reply("`Le bot a quitté le thread `");
+            interaction.reply({content: "✅ The bot left the thread", ephemeral: true});
             await thread.leave();
         }else if(interaction.options.getSubcommand() === 'archive'){
-            await interaction.reply("`Thread archivé`");
+            await interaction.reply({content: "✅ Thread archived", ephemeral: true});
             await thread.setArchived(true);
         }else if(interaction.options.getSubcommand() === 'unarchive'){
-            interaction.reply("`Thread desarchivé`");
+            await interaction.reply({content: "✅ Thread unarchived", ephemeral: true});
             await thread.setArchived(false);
         }else if(interaction.options.getSubcommand() === 'delete'){
             const channelId = interaction.options.getString('channel');
             const logChannel = client.channels.cache.get(channelId);
-            await logChannel.send("`Thread supprimé`");
+            await logChannel.send({content: "✅ Thread deleted", ephemeral: true});
             await thread.delete();
         }
     }

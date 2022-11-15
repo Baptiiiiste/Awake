@@ -45,12 +45,14 @@ module.exports = {
 **Reason:** ${reason}`)
             .setTimestamp();
 
-        await interaction.reply({ embeds: [response], ephemeral: true });
+        await member.timeout(null, reason);
+        
         const logChannel = client.channels.cache.get(guildSettings.logChannel);
         if(logChannel) logChannel.send({ embeds: [embed] });
 
 
-        await member.timeout(null, reason);
+        await interaction.reply({ embeds: [response], ephemeral: true });
+
 
     }
 };

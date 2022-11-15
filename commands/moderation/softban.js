@@ -5,8 +5,8 @@ module.exports = {
     category: 'moderation',
     permissions: ['BAN_MEMBERS'],
     ownerOnly: false,
-    usage: 'softban [@user]',
-    examples: ['softban @awake'],
+    usage: 'softban [@user] <reason>',
+    examples: ['softban @awake spam'],
     description: 'Kick someone from the server and delete his messages',
     options: [
         {
@@ -28,7 +28,8 @@ module.exports = {
 
         if(!member) return interaction.reply({content: `❌ Member not found.`, ephemeral: true});
         if(!member.bannable) return interaction.reply({ content: `❌ Cannot softban this member.`, ephemeral: true });
-
+        // await interaction.reply({content: `❌ I couldn't softban this member`, ephemeral: true});
+        
 
         const embed = new EmbedBuilder()
             .setTitle(`⚒️ User softbanned from the server`)
@@ -40,22 +41,24 @@ module.exports = {
 		**Moderator:** ${interaction.user.tag}
 		**Reason:** ${reason}`)
             .setTimestamp();
-
+        
 
         const response = new EmbedBuilder()
             .setColor("#5DBC4C")
             .setDescription(`✅ User ${member} was softbanned from the server. \n➡️ Reason: ${reason}`);
-
-
-        await member.ban({days: 7, reason: `${reason}`});
-        await interaction.guild.members.unban(member.id)
+                        
+        await member.ban({deleteMessageDays: 7, reason: `${reason}`});
+        
+        try {await interaction.guild.members.unban(member.id)}
+        catch(e){
+            return interaction.reply({content: "❌ Error: Member not banned from the server", ephemeral: true})
+        }
         const logChannel = client.channels.cache.get(guildSettings.logChannel);
+        
         if(logChannel) logChannel.send({ embeds: [embed] });
-
+        
         await interaction.reply({ embeds:[response], ephemeral: true });
 
-
-        await interaction.reply({content: `❌ I couldn't softban this member`, ephemeral: true});
     }
 };
 
