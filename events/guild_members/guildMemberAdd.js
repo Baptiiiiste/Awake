@@ -7,7 +7,14 @@ module.exports = {
 
         const fetchGuild = await client.getGuild(member.guild);
 
-        if(fetchGuild.lockdown == true) { return await member.kick({reason: `Server locked`}) }
+        if(fetchGuild.lockdown == true) { 
+
+            try{ member.send(`❌ You tried to join the server ${client.guild.id} but the server is locked, try again later.`) }
+            catch(e){  }
+            
+            return member.kick({reason: `Server locked`}) 
+        
+        }
 
         const logChannel = client.channels.cache.get(fetchGuild.logChannel);
 
