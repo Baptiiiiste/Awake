@@ -9,7 +9,7 @@ module.exports = {
 
         let guildSettings = await client.getGuild(interaction.guild);
         if(!guildSettings){
-            client.createGuild(interaction.guild);
+            await client.createGuild(interaction.guild);
             guildSettings = await client.getGuild(interaction.guild);
             return message.reply({content: `❌ | Updating database, please retype the command`, ephemeral: true});
 

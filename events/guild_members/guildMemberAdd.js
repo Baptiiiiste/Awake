@@ -7,6 +7,8 @@ module.exports = {
 
         const fetchGuild = await client.getGuild(member.guild);
 
+        if(fetchGuild.lockdown == true) { return await member.kick({reason: `Server locked`}) }
+
         const logChannel = client.channels.cache.get(fetchGuild.logChannel);
 
         const embed = new EmbedBuilder()
