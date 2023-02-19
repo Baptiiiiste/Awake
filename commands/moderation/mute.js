@@ -1,11 +1,12 @@
 const ms = require("ms");
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 const dayjs = require('dayjs')
+const Perms = require('../../utils/Perms.js');
 
 module.exports = {
     name: 'mute',
     category: 'moderation',
-    permissions: ['MODERATE_MEMBERS'],
+    permissions: [Perms.MODERATE_MEMBERS],
     ownerOnly: false,
     usage: 'mute [@user] [duration] [reason]',
     examples: ['mute @user 10m bad words'],

@@ -1,10 +1,10 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-
+const Perms = require('../../utils/Perms.js');
 
 module.exports = {
     name: 'modlogs',
     category: 'moderation',
-    permissions: ['MODERATE_MEMBERS'],
+    permissions: [Perms.MODERATE_MEMBERS],
     ownerOnly: false,
     usage: 'modedit [@user]',
     examples: ['modlogs @awake'],

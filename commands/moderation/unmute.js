@@ -1,9 +1,9 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-
+const Perms = require('../../utils/Perms.js');
 module.exports = {
     name: 'unmute',
     category: 'moderation',
-    permissions: ['MODERATE_MEMBERS'],
+    permissions: [Perms.MODERATE_MEMBERS],
     ownerOnly: false,
     usage: 'unmute [@user]',
     examples: ['unmute @awake'],

@@ -9,7 +9,7 @@ module.exports = {
 
         if(fetchGuild.lockdown == true) { 
 
-            try{ member.send(`❌ You tried to join the server ${client.guild.id} but the server is locked, try again later.`) }
+            try{ member.send(`❌ You tried to join the server ${client.guild.name}(ID: ${client.guild.id}) but the server is locked, try again later.`) }
             catch(e){  }
             
             return member.kick({reason: `Server locked`}) 

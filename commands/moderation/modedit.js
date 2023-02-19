@@ -1,11 +1,11 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 const { Guild } = require('../../models/index')
-
+const Perms = require('../../utils/Perms.js');
 
 module.exports = {
     name: 'modedit',
     category: 'moderation',
-    permissions: ['MODERATE_MEMBERS'],
+    permissions: [Perms.MODERATE_MEMBERS],
     ownerOnly: false,
     usage: 'modedit [case] [action] <reason>',
     examples: ['modedit 17 delete', 'modedit 5 reason Swearing'],

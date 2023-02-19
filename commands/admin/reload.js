@@ -1,10 +1,10 @@
 const { Guild } = require("../../models/index");
-
+const Perms = require('../../utils/Perms.js');
 
 module.exports = {
     name: 'reload',
     category: 'admin',
-    permissions: ['ADMINISTRATOR'],
+    permissions: [Perms.ADMINISTRATOR],
     ownerOnly: true,
     usage: 'reload',
     examples: [],

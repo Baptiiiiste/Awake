@@ -1,9 +1,9 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-
+const Perms = require('../../utils/Perms.js');
 module.exports = {
     name: 'unban',
     category: 'moderation',
-    permissions: ['BAN_MEMBERS'],
+    permissions: [Perms.BAN_MEMBERS],
     ownerOnly: false,
     usage: 'unban [id]',
     examples: ['unban 12484142515756548'],

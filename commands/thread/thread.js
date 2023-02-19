@@ -1,9 +1,10 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
+const Perms = require('../../utils/Perms.js');
 
 module.exports = {
     name: 'thread',
     category: 'thread',
-    permissions: ['MANAGE_THREADS'],
+    permissions: [Perms.MANAGE_THREADS],
     ownerOnly: false,
     usage: 'thread [join|leave|archive|unarchive|delete]',
     examples: ['thread join', 'thread delete'],

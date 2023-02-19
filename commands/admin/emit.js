@@ -1,9 +1,9 @@
 const { ApplicationCommandOptionType } = require('discord.js');
-
+const Perms = require('../../utils/Perms.js');
 module.exports = {
     name: 'emit',
     category: 'admin',
-    permissions: ['ADMINISTRATOR'],
+    permissions: [Perms.ADMINISTRATOR],
     ownerOnly: true,
     usage: 'emit [event]',
     examples: ['emit guildCreate'],

@@ -1,9 +1,10 @@
 const { ApplicationCommandOptionType } = require('discord.js');
+const Perms = require('../../utils/Perms.js');
 
 module.exports = {
     name: 'dbconfig',
     category: 'admin',
-    permissions: ['ADMINISTRATOR'],
+    permissions: [Perms.ADMINISTRATOR],
     ownerOnly: false,
     usage: 'dbconfig [key] <value>',
     examples: ['dbconfig logChannel 2165746146461', 'dbconfig logChannel'],

@@ -1,11 +1,11 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 const dayjs = require('dayjs')
-
+const Perms = require('../../utils/Perms.js');
 
 module.exports = {
     name: 'ban',
     category: 'moderation',
-    permissions: ['BAN_MEMBERS'],
+    permissions: [Perms.BAN_MEMBERS],
     ownerOnly: false,
     usage: 'ban [@user] [reason]',
     examples: ['ban @awake Swearing'],

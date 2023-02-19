@@ -1,8 +1,9 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
+const Perms = require('../../utils/Perms.js');
 module.exports = {
     name: 'lock',
     category: 'moderation',
-    permissions: ['MANAGE_CHANNELS'],
+    permissions: [Perms.MANAGE_CHANNELS],
     ownerOnly: false,
     usage: 'lock',
     examples: [''],

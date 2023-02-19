@@ -1,9 +1,9 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-
+const Perms = require('../../utils/Perms.js');
 module.exports = {
     name: 'clear',
     category: 'moderation',
-    permissions: ['MANAGE_MESSAGES'],
+    permissions: [Perms.MANAGE_MESSAGES],
     ownerOnly: false,
     usage: 'clear [amount] <@user>',
     examples: ['clear 50', 'clear 15 @awake'],

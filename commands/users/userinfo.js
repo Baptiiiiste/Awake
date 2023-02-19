@@ -1,9 +1,9 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-
+const Perms = require('../../utils/Perms.js');
 module.exports = {
     name: 'userinfo',
     category: 'users',
-    permissions: ['SEND_MESSAGES'],
+    permissions: [Perms.SEND_MESSAGES],
     ownerOnly: false,
     usage: 'userinfo [@user]',
     examples: ['userinfo @Awake'],

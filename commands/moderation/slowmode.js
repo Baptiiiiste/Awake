@@ -1,9 +1,9 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-
+const Perms = require('../../utils/Perms.js');
 module.exports = {
     name: 'slowmode',
     category: 'moderation',
-    permissions: ['MANAGE_CHANNELS'],
+    permissions: [Perms.MANAGE_CHANNELS],
     ownerOnly: false,
     usage: 'slowmode [amount]',
     examples: ['slowmode 10', 'slowmode 0'],

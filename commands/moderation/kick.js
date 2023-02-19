@@ -1,9 +1,9 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-
+const Perms = require('../../utils/Perms.js');
 module.exports = {
     name: 'kick',
     category: 'moderation',
-    permissions: ['KICK_MEMBERS'],
+    permissions: [Perms.KICK_MEMBERS],
     ownerOnly: false,
     usage: 'kick [@user] [reason]',
     examples: ['kick @awake Get out of here !'],

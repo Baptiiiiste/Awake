@@ -1,8 +1,9 @@
+const Perms = require('../../utils/Perms.js');
 
 module.exports = {
     name: 'lockdown',
     category: 'moderation',
-    permissions: ['MANAGE_SERVER'],
+    permissions: [Perms.MANAGE_GUILD, Perms.KICK_MEMBERS],
     ownerOnly: false,
     usage: 'lockdown',
     examples: ['lockdown'],

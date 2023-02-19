@@ -1,8 +1,7 @@
 const { readdirSync } = require('fs');
 const commandFolder = readdirSync('./commands');
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-
-
+const Perms = require('../../utils/Perms.js');
 
 const contextDescription = {
     userinfo: 'Send user\'s informations'
@@ -11,7 +10,7 @@ const contextDescription = {
 module.exports = {
     name: 'help',
     category: 'utils',
-    permissions: ['SEND_MESSAGES'],
+    permissions: [Perms.SEND_MESSAGES],
     ownerOnly: false,
     usage: 'help <command>',
     examples: ['help ping'],
