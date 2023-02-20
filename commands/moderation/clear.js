@@ -55,7 +55,11 @@ module.exports = {
                     .setTimestamp();
 
                 const logChannel = client.channels.cache.get(guildSettings.logChannel);
-                if(logChannel) logChannel.send({ embeds: [embed] });
+                if(logChannel) {
+                    try{
+                        logChannel.send({ embeds: [embed] });
+                    }catch(e){}
+                }
 
 
                 const response = new EmbedBuilder()
@@ -78,7 +82,11 @@ module.exports = {
                     .setTimestamp();
 
                 const logChannel = client.channels.cache.get(guildSettings.logChannel);
-                if(logChannel) logChannel.send({ embeds: [embed] });
+                if(logChannel) {
+                    try{
+                        logChannel.send({ embeds: [embed] });
+                    }catch(e){}
+                }
 
 
                 const response = new EmbedBuilder()

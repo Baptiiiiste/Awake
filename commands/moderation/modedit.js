@@ -81,7 +81,11 @@ ${newreason ? `**New reason:** ${newreason}` : ""}
         `)
         .setTimestamp();
         const logChannel = client.channels.cache.get(guildSettings.logChannel);
-        if(logChannel) logChannel.send({ embeds: [logResponse]});
+        if(logChannel) {
+            try{
+                logChannel.send({ embeds: [logResponse] });
+            }catch(e){}
+        }
 
     }
 };

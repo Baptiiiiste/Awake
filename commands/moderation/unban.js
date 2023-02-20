@@ -42,7 +42,11 @@ module.exports = {
 
 
         const logChannel = client.channels.cache.get(guildSettings.logChannel);
-        if(logChannel) logChannel.send({ embeds: [embed] });
+        if(logChannel) {
+            try{
+                logChannel.send({ embeds: [embed] });
+            }catch(e){}
+        }
 
         await interaction.guild.members.unban(member);
         await interaction.reply({embeds: [response], ephemeral: true});

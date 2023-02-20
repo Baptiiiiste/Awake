@@ -11,8 +11,7 @@ module.exports = {
         if(!guildSettings){
             await client.createGuild(interaction.guild);
             guildSettings = await client.getGuild(interaction.guild);
-            return message.reply({content: `❌ | Updating database, please retype the command`, ephemeral: true});
-
+            return interaction.reply({content: `❌ Updating database, please retype the command`, ephemeral: true});
         }
 
         

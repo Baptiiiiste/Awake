@@ -28,8 +28,11 @@ module.exports = {
             `)
             .setTimestamp();
 
-        
-        logChannel.send({ embeds: [embed]});
+        if(logChannel) {
+            try{
+                logChannel.send({ embeds: [embed] });
+            }catch(e){}
+        }
     }
 }
 

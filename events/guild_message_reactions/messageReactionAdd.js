@@ -20,9 +20,9 @@ module.exports = {
             }
         }
 
-        if(emojiName === '✅') member.send("Hi !");
-        if(emojiName === '❌') message.delete();
-        if(emojiName === '🟦') message.reactions.removeAll();
+        // if(emojiName === '✅') member.send("Hi !");
+        // if(emojiName === '❌') message.delete();
+        // if(emojiName === '🟦') message.reactions.removeAll();
 
     }   
 }
