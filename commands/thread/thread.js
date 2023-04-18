@@ -40,7 +40,7 @@ module.exports = {
     async runInteraction(client, interaction) {
 
         let thread = interaction.channel;
-        if (!thread.isThread()) return interaction.reply({content: `❌ This channel isn't a thread`, ephemeral: true});
+        if (!thread.isThread()) return interaction.reply({embeds: [AutoEmbed.sendErrorEmbed(`This channel isn't a thread.`)], ephemeral: true});
 
         if(interaction.options.getSubcommand() === 'join'){
             interaction.reply({content: "✅ The bot joined the thread", ephemeral: true});

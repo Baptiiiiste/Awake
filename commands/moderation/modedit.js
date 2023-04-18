@@ -35,12 +35,12 @@ module.exports = {
         const action = interaction.options.getString("action", true);
         const newreason = interaction.options.getString("reason");
 
-        if(!caseNumber && caseNumber !== 0) return interaction.reply({ content: `❌ You must specify a case number.`, ephemeral: true });
-        if(!action) return interaction.reply({ content: `❌ You must specify an action (delete, reason).`, ephemeral: true });
+        if(!caseNumber && caseNumber !== 0) return interaction.reply({  embeds: [AutoEmbed.sendErrorEmbed(`You must specify a number case.`)], ephemeral: true });
+        if(!action) return interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`You must specify an action (delete, reason).`)], ephemeral: true });
 
 
         const filteredCase = guildSettings.users.map(c => c.case).indexOf(caseNumber);
-        if (filteredCase == -1) return interaction.reply({ content: `❌ Case not found.`, ephemeral: true });
+        if (filteredCase == -1) return interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`Case not found.`)], ephemeral: true });
 
 
         if(action == "delete" || action == "del"){
@@ -54,7 +54,7 @@ module.exports = {
             await interaction.reply({ embeds:[response], ephemeral: true });
 
         }else if(action == "reason"){
-            if(!newreason) return interaction.reply({ content: `❌ You must specify a new reason.`, ephemeral: true });
+            if(!newreason) return interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`You must specify a new reason.`)], ephemeral: true });
             guildSettings.users[filteredCase].reason = newreason;
 
             await client.updateGuild(interaction.guild, {users: guildSettings.users});
@@ -66,7 +66,7 @@ module.exports = {
             await interaction.reply({ embeds:[response], ephemeral: true });
 
         }else{
-            await interaction.reply({ content: `❌ You must specify a valid action (delete, reason).`, ephemeral: true })
+            await interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`You must specify a valid action (delete, reason).`)], ephemeral: true })
             return
         }
 

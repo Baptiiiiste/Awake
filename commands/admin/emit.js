@@ -9,7 +9,7 @@ module.exports = {
     examples: ['emit guildCreate'],
     description: 'Emit a specified event',
     run(client, message, args) {
-        if (!args[0] || !args[0].match(/^(guildMemberAdd|guildMemberRemove)$/)) return message.reply({content: "❌ | Invalid event (`guildMemberAdd`,`guildMemberRemove`)", ephemeral: true})
+        if (!args[0] || !args[0].match(/^(guildMemberAdd|guildMemberRemove|guildCreate)$/)) return message.reply({embeds: [AutoEmbed.sendErrorEmbed(`Invalid event (\`guildMemberAdd\`,\`guildMemberRemove\`,\`guildCreate\`).`)], ephemeral: true})
         
         if (args[0] == 'guildMemberAdd'){
             client.emit('guildMemberAdd', message.member);

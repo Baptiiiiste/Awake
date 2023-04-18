@@ -28,7 +28,7 @@ module.exports = {
 
 
 
-        if (!member) return interaction.reply({ content: `❌ Member not found.`, ephemeral: true });
+        if (!member) return interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`Member not found.`)], ephemeral: true });
 
         const response = new EmbedBuilder()
             .setColor("#5DBC4C")

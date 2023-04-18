@@ -1,6 +1,7 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 const dayjs = require('dayjs')
 const Perms = require('../../utils/Perms.js');
+const AutoEmbed = require('../../utils/AutoEmbed.js');
 
 module.exports = {
     name: 'ban',
@@ -28,9 +29,9 @@ module.exports = {
         const member = interaction.options.getMember("member", true);
         const reason = interaction.options.getString("reason") || "No reason given";
 
-        if (!member) return interaction.reply({ content: `❌ Member not found.`, ephemeral: true });
+        if (!member) return interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`Member not found.`)], ephemeral: true });
 
-        if(!member.bannable) return interaction.reply({ content: `❌ Cannot ban this member.`, ephemeral: true });
+        if(!member.bannable) return interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`Cannot ban this member.`)], ephemeral: true });
 
         const embed = new EmbedBuilder()
             .setTitle(`⚒️ User banned from the server`)

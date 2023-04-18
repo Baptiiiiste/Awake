@@ -9,10 +9,15 @@ module.exports = {
 
         if(fetchGuild.lockdown == true) { 
 
-            try{ member.send(`❌ You tried to join the server ${client.guild.name}(ID: ${client.guild.id}) but the server is locked, try again later.`) }
-            catch(e){  }
+            const user = client.users.cache.get(member.id);
+            try{ 
+                await user.send(`❌ You tried to join the server \`${client.guilds.cache.get(fetchGuild.id).name}\` (**ID**: \`${fetchGuild.id}\`) but the the server is locked, try again later.`) 
+            }
+            catch(e){ 
+                console.log(`❌ I tried to send a message to ${user.tag} but I couldn't send it.`)
+            }
             
-            return member.kick({reason: `Server locked`}) 
+            return member.kick({reason: `Server locked.`}) ;
         
         }
 

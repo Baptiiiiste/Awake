@@ -26,9 +26,8 @@ module.exports = {
         const member = interaction.options.getMember("member", true);
         const reason = interaction.options.getString("reason") || "No reason given";
 
-        if(!member) return interaction.reply({content: `❌ Member not found.`, ephemeral: true});
-        if(!member.bannable) return interaction.reply({ content: `❌ Cannot softban this member.`, ephemeral: true });
-        // await interaction.reply({content: `❌ I couldn't softban this member`, ephemeral: true});
+        if(!member) return interaction.reply({embeds: [AutoEmbed.sendErrorEmbed(`Member not found.`)], ephemeral: true});
+        if(!member.bannable) return interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`Cannot softban this member.`)], ephemeral: true });
         
 
         const embed = new EmbedBuilder()
@@ -51,7 +50,7 @@ module.exports = {
         
         try {await interaction.guild.members.unban(member.id)}
         catch(e){
-            return interaction.reply({content: "❌ Error: Member not banned from the server", ephemeral: true})
+            return interaction.reply({embeds: [AutoEmbed.sendErrorEmbed(`Member not banned from the server.`)], ephemeral: true})
         }
         const logChannel = client.channels.cache.get(guildSettings.logChannel);
         if(logChannel) {

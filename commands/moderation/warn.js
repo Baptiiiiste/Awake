@@ -27,8 +27,8 @@ module.exports = {
         const member = interaction.options.getMember("member", true);
         const reason = interaction.options.getString("reason") || "No reason given";
 
-        if (!member) return interaction.reply({ content: `❌ Member not found.`, ephemeral: true });
-        if(!member.moderatable) return interaction.reply({ content: `❌ Cannot warn this member.`, ephemeral: true });
+        if (!member) return interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`Member not found.`)], ephemeral: true });
+        if(!member.moderatable) return interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`Cannot warn this member.`)], ephemeral: true });
 
 
         const embed = new EmbedBuilder()

@@ -1,5 +1,6 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 const Perms = require('../../utils/Perms.js');
+
 module.exports = {
     name: 'clear',
     category: 'moderation',
@@ -27,7 +28,7 @@ module.exports = {
         const amount = interaction.options.getNumber("amount");
 
 
-        if (amount > 100 || amount < 2) return interaction.reply({ content: '❌ Invalid amount.', ephemeral: true });
+        if (amount > 100 || amount < 2) return interaction.reply({  embeds: [AutoEmbed.sendErrorEmbed(`Invalid amount.`)], ephemeral: true });
 
         if (member) {
             const msgToDelete = await interaction.channel.messages.fetch();

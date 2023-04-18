@@ -38,9 +38,9 @@ module.exports = {
         const reason = interaction.options.getString("reason") || "No reason given";
 
 
-        if (!member) return interaction.reply({ content: `❌ Member not found.`, ephemeral: true });
-        if (!convertedTime) return interaction.reply({ content: `❌ You must set a valid duration for the mute.`, ephemeral: true });
-        if (!member.moderatable) return interaction.reply({ content: `❌ Cannot mute this member.`, ephemeral: true });
+        if (!member) return interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`Member not found.`)], ephemeral: true });
+        if (!convertedTime) return interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`You must set a valid duration for the mute.`)], ephemeral: true });
+        if (!member.moderatable) return interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`Cannot mute this member.`)], ephemeral: true });
 
 
         const response = new EmbedBuilder()

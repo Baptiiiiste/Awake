@@ -19,10 +19,10 @@ module.exports = {
     ],
     async runInteraction(client, interaction, guildSettings) {
         const member = interaction.options.getMember("member", true);
-        if (!member) return interaction.reply({ content: `❌ Member not found.`, ephemeral: true });
+        if (!member) return interaction.reply({ embeds: [AutoEmbed.sendErrorEmbed(`Member not found.`)], ephemeral: true });
 
         const filteredUser = guildSettings.users.filter(u => u.id == member.id);
-        if(filteredUser.length == 0) return interaction.reply({content: '❌ No logs found for this user.', ephemeral: true});
+        if(filteredUser.length == 0) return interaction.reply({embeds: [AutoEmbed.sendErrorEmbed(`No logs found for this user.`)], ephemeral: true});
 
         let sanctionList = `\`${member.user.tag}\`'s logs: \n`;
 
